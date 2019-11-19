@@ -10,10 +10,10 @@ import com.psl.caching.models.Item;
 public class ItemRepository {
 
     public static final String KEY = "ITEM";
-    private RedisTemplate<String, Item> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
     private HashOperations hashOperations;
 
-    public ItemRepository(RedisTemplate<String, Item> redisTemplate) {
+    public ItemRepository(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
         hashOperations = redisTemplate.opsForHash();
     }

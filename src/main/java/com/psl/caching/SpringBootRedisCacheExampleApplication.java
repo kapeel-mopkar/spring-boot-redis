@@ -5,8 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-
-import com.psl.caching.models.Item;
+import org.springframework.data.redis.serializer.GenericToStringSerializer;
 
 @SpringBootApplication
 public class SpringBootRedisCacheExampleApplication {
@@ -21,10 +20,15 @@ public class SpringBootRedisCacheExampleApplication {
 	}
 	
 	@Bean
-	RedisTemplate<String, Item> redisTemplate(){
-		RedisTemplate<String,Item> redisTemplate = new RedisTemplate<String, Item>();
-		redisTemplate.setConnectionFactory(jedisConnectionFactory());
-		return redisTemplate;
+	RedisTemplate<String, Object> redisTemplate(){
+		//		RedisTemplate<String,Item> redisTemplate = new RedisTemplate<String, Item>();
+		//		redisTemplate.setConnectionFactory(jedisConnectionFactory());
+		//		return redisTemplate;
+		
+		final RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
+	    template.setConnectionFactory(jedisConnectionFactory());
+	    template.setValueSerializer(new GenericToStringSerializer<Object>(Object.class));
+	    return template;
 	}
 
 }
